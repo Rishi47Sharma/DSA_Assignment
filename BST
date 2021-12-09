@@ -168,13 +168,15 @@ void displayAllChildWithParent(bstnode*root){
     else if(root->left==NULL){
             cout<<"Parent:"<<root->data<<endl;
              cout<<"Child :"<<root->right->data<<endl;
+             displayAllChildWithParent(root->right);
              return;
 
     }
 
-  if(root->right==NULL){
+ else if(root->right==NULL){
             cout<<"Parent:"<<root->data<<endl;
              cout<<"Child :"<<root->left->data<<endl;
+             displayAllChildWithParent(root->left);
              return;
 
     }
@@ -195,42 +197,6 @@ void displayAllChildWithParent(bstnode*root){
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int main()
 {
     bstnode *root=NULL;
