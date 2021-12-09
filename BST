@@ -33,7 +33,7 @@ bstnode*Insert(bstnode*root,int data ){
     }
     return root;
 }
-//function to search 
+//function to search
 bool Search(bstnode*root,int data){
     if(root==NULL){
         return false;
@@ -43,7 +43,7 @@ bool Search(bstnode*root,int data){
     {
         return true;
     }
-    //data 
+    //data
 
     else if (data<root->data){
         return Search(root->left,data);
@@ -160,6 +160,41 @@ bstnode*Delete(bstnode*root,int data){
     return root;
 
 }
+void displayAllChildWithParent(bstnode*root){
+    if (root->left==NULL&&root->right==NULL)
+    {
+        return ;
+    }
+    else if(root->left==NULL){
+            cout<<"Parent:"<<root->data<<endl;
+             cout<<"Child :"<<root->right->data<<endl;
+             return;
+
+    }
+
+  if(root->right==NULL){
+            cout<<"Parent:"<<root->data<<endl;
+             cout<<"Child :"<<root->left->data<<endl;
+             return;
+
+    }
+
+
+
+    else{
+            cout<<"Parent:"<<root->data<<endl;
+            cout<<"Child :"<<root->left->data<<" "<<root->right->data<<endl;
+            displayAllChildWithParent(root->left);
+            displayAllChildWithParent(root->right);
+
+
+
+
+    }
+
+
+
+}
 
 
 
@@ -207,6 +242,7 @@ int main()
         cout<<"3.Traversal"<<endl;
         cout<<"4.Delete"<<endl;
         cout<<"5.Mirror"<<endl;
+        cout<<"6.Parent and child"<<endl;
         cout<<"20.Exit"<<endl;
         cout<<"SELECT :";
         cin>>select;
@@ -286,6 +322,10 @@ cout<<endl;
       mirror(root);
       Inorder(root);
       cout<<endl;
+      break;
+  }
+  case 6:{
+      displayAllChildWithParent(root);
       break;
   }
 
