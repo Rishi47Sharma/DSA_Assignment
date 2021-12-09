@@ -1,0 +1,222 @@
+#include <iostream>
+using namespace std;
+struct bstnode{
+    int data;
+    struct  bstnode*left;
+    struct bstnode*right;
+};
+//creating new BST node
+bstnode*Getnewnode( int data){
+    bstnode *newnode = new bstnode();
+    newnode->data=data;
+    newnode->left=newnode->right=NULL;
+    return newnode;
+}
+//inserting new node  in BST
+bstnode*Insert(bstnode*root,int data ){
+
+    if(root==NULL)
+    {
+        root=Getnewnode(data);
+
+
+    }
+    //if data field is less than or equal to root data than add as left child and the address of the that node
+    else if(data<=root->data){
+        root->left=Insert(root->left,data);
+
+    }
+    //if data field is greater root data than add as left child and the address of the that node
+    else{
+        root->right=Insert(root->right,data);
+
+    }
+    return root;
+}
+
+bool Search(bstnode*root,int data){
+    if(root==NULL){
+        return false;
+
+    }
+     else if(data==root->data)
+    {
+        return true;
+    }
+
+    else if (data<root->data){
+        return Search(root->left,data);
+
+    }
+    else{
+       return Search(root->right,data);
+
+    }
+
+
+
+
+
+}
+void Inorder(bstnode*root)
+{
+    if(root==NULL){
+        return;
+    }
+
+    Inorder(root->left);
+    cout<<root->data<<" ";
+    Inorder(root->right);
+
+
+}
+void Preorder(bstnode*root)
+{
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<" ";
+    Preorder(root->left);
+    Preorder(root->right);
+
+
+}
+void Postorder(bstnode*root)
+{
+    if(root==NULL){
+        return;
+    }
+
+    Postorder(root->left);
+    Postorder(root->right);
+    cout<<root->data<<" ";
+
+
+}
+bstnode*bstdelete(bstnode*root,int data){
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    bstnode *root=NULL;
+    int select;
+    do{
+        cout<<"MAIN MENU"<<endl;
+        cout<<"1.Insert"<<endl;
+        cout<<"2.search"<<endl;
+        cout<<"3.Traversal"<<endl;
+        cout<<"20.Exit"<<endl;
+        cout<<"SELECT :";
+        cin>>select;
+
+        cout<<endl;
+        switch(select){
+    case 1:
+        {
+            int num;
+            cout<<"Enter Number :";
+            cin>>num;
+            root=Insert(root,num);
+            cout<<"Inserted"<<endl;
+            cout<<endl;
+            break;
+        }
+        case 2:{
+            int num;
+            cout<<"Enter Number :";
+            cin>>num;
+            bool check=Search(root,num);
+
+            if(check==true){
+                cout<<"Data found"<<endl;
+            }
+            else{
+                cout<<"Data not found"<<endl;
+            }
+
+              break;
+
+        }
+    case 3:{
+        int numb;
+        cout<<"Traversal"<<endl;
+        cout<<"1.Inorder"<<endl;
+        cout<<"2.Preorder"<<endl;
+        cout<<"3.Postorder"<<endl;
+        cout<<"select type of traversal:";
+        cin>>numb;
+
+       if(numb==1){
+        cout<<"Inorder:";
+        Inorder(root);
+        cout<<endl;
+
+       }
+       else if(numb==2){
+        cout<<"Preorder :";
+        Preorder(root);
+        cout<<endl;
+       }
+       else if(numb==3){
+        cout<<"Postorder :";
+        Postorder(root);
+        cout<<endl;
+       }
+       else{
+        cout<<"invalid"<<endl;
+
+       }
+       break;
+
+    }
+
+
+    case 20:
+        {
+            cout<<"Exiting...........!";
+            break;
+        }
+    default:
+        {
+            cout<<"Enter valid input";
+            break;
+        }
+        }
+
+    }while(select!=20);
+
+
+    return 0;
+}
