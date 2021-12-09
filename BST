@@ -197,6 +197,14 @@ void displayAllChildWithParent(bstnode*root){
 
 
 }
+int depth(bstnode*root){
+    if(root==NULL)
+        return -1;
+    int left=depth(root->left);
+    int right=depth(root->right);
+    int ans=max(left,right)+1;
+    return ans;
+}
 int main()
 {
     bstnode *root=NULL;
@@ -209,6 +217,7 @@ int main()
         cout<<"4.Delete"<<endl;
         cout<<"5.Mirror"<<endl;
         cout<<"6.Parent and child"<<endl;
+        cout<<"7.Depth"<<endl;
         cout<<"20.Exit"<<endl;
         cout<<"SELECT :";
         cin>>select;
@@ -292,6 +301,12 @@ cout<<endl;
   }
   case 6:{
       displayAllChildWithParent(root);
+      break;
+  }
+  case 7:{
+      int ans = depth(root);
+      cout<<"Depth :"<<ans;
+      cout<<endl;
       break;
   }
 
