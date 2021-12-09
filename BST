@@ -33,16 +33,17 @@ bstnode*Insert(bstnode*root,int data ){
     }
     return root;
 }
-
+//function to search 
 bool Search(bstnode*root,int data){
     if(root==NULL){
         return false;
 
-    }
+    }//data found
      else if(data==root->data)
     {
         return true;
     }
+    //data 
 
     else if (data<root->data){
         return Search(root->left,data);
@@ -52,12 +53,25 @@ bool Search(bstnode*root,int data){
        return Search(root->right,data);
 
     }
-
-
-
-
-
 }
+//function to print mirror
+void mirror(bstnode*root){
+    if(root==NULL){
+        return;
+    }
+    else{
+            //go to leaf of BST
+        mirror(root->left);
+        mirror(root->right);
+    //start swaping pointer
+        bstnode*temp=root->left;
+        root->left=root->right;
+        root->right=temp;
+
+    }
+}
+
+
 void Inorder(bstnode*root)
 {
     if(root==NULL){
@@ -93,9 +107,63 @@ void Postorder(bstnode*root)
 
 
 }
-bstnode*bstdelete(bstnode*root,int data){
-    
+ bstnode*FindMin(bstnode*root){
+    if(root==NULL){
+        cout<<"tree is empty";
+        return NULL;
+    }
+    while(root->left!=NULL){
+            root=root->left;
+
+    }
+    return root;
+
 }
+bstnode*Delete(bstnode*root,int data){
+    if(root==NULL)
+    {
+        return root;
+    }
+    else if(data<root->data){
+        root->left=Delete(root->left,data);
+    }
+    else if(data>root->data){
+        root->right=Delete(root->right,data);
+    }
+    else{
+        if(root->left==NULL&&root->right==NULL){
+            delete root;
+         root=NULL;
+        }
+        else if(root->right==NULL){
+                bstnode*temp=root;
+         root=root->left;
+         delete temp;
+         }
+         else if(root->left==NULL){
+
+         bstnode*temp=root;
+         root=root->right;
+         delete temp;
+
+         }
+         else{
+                Preorder(root);
+         bstnode*temp= FindMin(root->right);
+         root->data=temp->data;
+         root->right=Delete(root->right,temp->data);
+
+
+         }
+
+    }
+    return root;
+
+}
+
+
+
+
 
 
 
@@ -137,11 +205,12 @@ int main()
         cout<<"1.Insert"<<endl;
         cout<<"2.search"<<endl;
         cout<<"3.Traversal"<<endl;
+        cout<<"4.Delete"<<endl;
+        cout<<"5.Mirror"<<endl;
         cout<<"20.Exit"<<endl;
         cout<<"SELECT :";
         cin>>select;
-
-        cout<<endl;
+cout<<endl;
         switch(select){
     case 1:
         {
@@ -175,6 +244,7 @@ int main()
         cout<<"1.Inorder"<<endl;
         cout<<"2.Preorder"<<endl;
         cout<<"3.Postorder"<<endl;
+
         cout<<"select type of traversal:";
         cin>>numb;
 
@@ -201,7 +271,23 @@ int main()
        break;
 
     }
-
+    case 4:
+        {
+          int num;
+            cout<<"Enter Number :";
+            cin>>num;
+            root=Delete(root,num);
+        }
+  case 5: {
+      cout<<"Inorder :";
+      Inorder(root);
+      cout<<endl;
+      cout<<"Mirror :";
+      mirror(root);
+      Inorder(root);
+      cout<<endl;
+      break;
+  }
 
     case 20:
         {
