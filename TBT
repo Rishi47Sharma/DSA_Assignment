@@ -1,0 +1,256 @@
+Name: Rishikesh umashankar sharma
+Roll No:
+Title:  Threaded  Binary Tree
+Problem Statement :Implement In-order Threaded Binary Tree and traverse it in In-order and Pre-order.*/
+
+
+
+
+
+
+
+#include <iostream>
+#define MAX_VALUE 65536
+//true = child
+//false = parent
+
+using namespace std;
+class node{
+    public:
+    int data;
+    node *left ,*right;
+    bool rightThread,leftThread;
+};
+class ThreadedBinaryTree{
+private :
+    node *root,*head ;
+
+
+public :
+
+
+    ThreadedBinaryTree(){
+        //head node
+        root = new node;
+        root->right=root->left=root;
+        root->data = MAX_VALUE;
+        root->rightThread=true;
+        root->leftThread=true;
+        head=root;
+
+
+    }
+
+
+// insert function
+void insert(int key){
+    node *p = root;
+
+    //transversing element
+    for(;;)
+    {
+
+        if(p->data<key)
+        {
+            if(p->rightThread)
+            {
+                break;
+            }
+            p=p->right;
+        }
+      else if(p->data>key)
+        {
+            if(p->leftThread)
+            {
+                break;
+            }
+          p=p->left;
+        }
+        else{
+            return;
+        }
+
+
+
+        }
+//creating threaded
+node*temp=new node;
+temp->data=key;
+temp->leftThread=temp->rightThread=true;
+//condition for root note;
+if(p->data==MAX_VALUE){
+    root=temp;
+    p->left=temp;
+    temp->left= temp->right=p;
+    p->right=p;
+    p->leftThread=p->rightThread=false;
+
+}
+//greater than key value
+else if(p->data<key)
+{
+    temp->right=p->right;
+    p->right=temp;
+    temp->left=p;
+    p->rightThread=false;
+
+
+
+
+
+}
+else{
+    temp->left=p->left;
+    p->left=temp;
+    temp->right=p;
+    p->leftThread=false;
+
+}
+
+
+}
+//function for inorder successor
+node* InorderSuccessor(node*t)
+{//check if right child is present
+    if(t->rightThread==false){
+            //goto to the right node
+           t= t->right;
+    //traverse it to left most node
+    while(t->leftThread!=true){
+
+            t=t->left;
+ }
+     return t;
+
+    }
+    else{
+            //return right node
+        return t->right;
+    }
+}
+//function for Inorder traversal
+void InorderTraversal(){
+
+    node* t = root;
+// reaches it leftmost node
+
+    while(t->leftThread!=true){
+
+       t= t->left;
+}
+
+    //traverse until it reaches head node
+    while(t!=head){
+
+        cout<<t->data<<" ";
+        t=InorderSuccessor(t);
+
+
+    }
+}
+//function for preorder traversal
+void PreorderTraversal(){
+    //go to the root node
+    node* t =root;
+int flag=0;
+ //traverse it until head node
+    while(t!=head)
+    {
+        if(flag==0)
+            //print the data
+        cout<<" "<<t->data;
+        //check whether node has left child
+        if((t->leftThread==false)&&(flag==0))
+        {
+            //goto left child
+            t=t->left;
+
+
+        }
+        else
+        {
+            while(1)
+            { //check whether right child is present
+                if(t->rightThread==false)
+                {//goto the right child
+                    flag=0;
+                    t=t->right;
+                    break;
+
+                }
+                else
+                { //goto right child of the root node
+                    if(t!=head)
+                    {
+                        flag=1;
+                        t=t->right;
+                        break;
+
+                    }
+                }
+            }
+        }
+    }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+};
+
+
+
+
+int main()
+{
+ ThreadedBinaryTree obj ;
+ int i;
+obj.insert(43);
+obj.insert(63);
+obj.insert(56);
+obj.insert(34);
+obj.insert(9);
+obj.insert(20);
+obj.insert(12);
+obj.insert(80);
+obj.insert(100);
+
+do{
+        cout<<endl;
+    cout<<"Threaded Binary tree"<<endl;
+    cout<<"1.Inorder traversal"<<endl;
+    cout<<"1.Preorder traversal"<<endl;
+    cout<<"Enter :";
+    cin>>i;
+    cout<<endl;
+    switch(i)
+    {
+    case 1 :
+        {
+            cout<<"Inorder Traversal:";obj.InorderTraversal();cout<<endl;
+            break;
+        }
+    case 2 :
+        {
+            cout<<"Preorder Traversal:";obj.PreorderTraversal();cout<<endl;
+            break;
+        }
+    }
+}while(i!=3);
+
+
+
+
+
+}
